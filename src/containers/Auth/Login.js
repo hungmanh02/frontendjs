@@ -6,21 +6,22 @@ import * as actions from "../../store/actions";
 import "./Login.scss";
 // import { FormattedMessage } from "react-intl";
 
-// import adminService from "../services/adminService";
+import { handleLoginApi } from "../../services/userService.js";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.btnLogin = React.createRef();
     this.state = {
-      username: "",
+      email: "",
       password: "",
+      errMessage: "",
       isShowPassword: false,
     };
   }
-  handleOnChangeUsername = (event) => {
+  handleOnChangeEmail = (event) => {
     this.setState({
-      username: event.target.value,
+      email: event.target.value,
     });
   };
   handleOnChangePassword = (event) => {
@@ -28,14 +29,30 @@ class Login extends Component {
       password: event.target.value,
     });
   };
-  handleSubmitLogin = () => {
-    console.log(
-      "username:",
-      this.state.username,
-      " password:",
-      this.state.password
-    );
-    console.log("all state", this.state);
+  handleSubmitLogin = async () => {
+    this.setState({
+      errMessage: "",
+    });
+    try {
+      let data = await handleLoginApi(this.state.email, this.state.password);
+      if (data && data.errCode !== 0) {
+        this.setState({
+          errMessage: data.message,
+        });
+      }
+      if (data && data.errCode === 0) {
+        //todo
+        console.log("login succeeds!");
+      }
+    } catch (e) {
+      if (e.response) {
+        if (e.response.data) {
+          this.setState({
+            errMessage: e.response.data.message,
+          });
+        }
+      }
+    }
   };
   handleShowHidePassword = () => {
     this.setState({
@@ -55,10 +72,10 @@ class Login extends Component {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Enter your username"
-                value={this.state.username}
+                placeholder="Enter your Email"
+                value={this.state.email}
                 onChange={(e) => {
-                  this.handleOnChangeUsername(e);
+                  this.handleOnChangeEmail(e);
                 }}
               />
             </div>
@@ -90,11 +107,14 @@ class Login extends Component {
                 </span>
               </div>
             </div>
+            <div className="col-12" style={{ color: "red" }}>
+              {this.state.errMessage}
+            </div>
             <div className="col-12">
               <button
                 className="btn-login"
-                onClick={(event) => {
-                  this.handleSubmitLogin(event);
+                onClick={() => {
+                  this.handleSubmitLogin();
                 }}
               >
                 Login
