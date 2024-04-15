@@ -47,3 +47,38 @@
     color: red !important;
   }
 }
+
+// Modal User
+
+.modal-user-container {
+  .modal-content {
+    .modal-header {
+      button {
+        background-color: transparent !important;
+        border: none;
+        color: white;
+        font-size: 20px;
+      }
+    }
+  }
+  .modal-user-body {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    .input-container {
+      display: flex;
+      flex-direction: column;
+      width: calc(50% - 5px);
+      &.max-width-input {
+        width: 100%;
+      }
+      input {
+        border-radius: 3px;
+        border: 1px solid gray;
+        outline: none;
+        height: 30px;
+        padding: 0 10px;
+      }
+    }
+  }
+}
