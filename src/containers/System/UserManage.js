@@ -2,6 +2,7 @@ import React, { Component } from "react";
 // import { FormattedMessage } from 'react-intl';
 import "./UserManage.scss";
 import { connect } from "react-redux";
+import { emitter } from "../../utils/emitter";
 import {
   getAllUsers,
   createNewUserService,
@@ -52,6 +53,7 @@ class UserManage extends Component {
         this.setState({
           isOpenModalUser: false,
         });
+        emitter.emit("EVENT_CLEAR_MODAL_DATA");
       }
     } catch (error) {
       console.log(error);
