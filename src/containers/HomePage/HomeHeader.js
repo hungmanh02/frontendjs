@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import "./HomeHeader.scss";
-import banner from "../../assets/dong-phuc-benh-vien-y-te-05.png";
-
 class HomeHeader extends Component {
   render() {
     return (
@@ -49,10 +47,58 @@ class HomeHeader extends Component {
           </div>
         </div>
         <div className="home-header-banner">
-          <div className="top-title">NỀN TẢNG Y TẾ</div>
-          <div className="center-title">CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
-          <div className="search"></div>
-          <div className="options"></div>
+          <div className="content-up">
+            <div className="top-title">NỀN TẢNG Y TẾ</div>
+            <div className="center-title">CHĂM SÓC SỨC KHỎE TOÀN DIỆN</div>
+            <div className="search">
+              <i className="fas fa-search"></i>
+              <input
+                type="text"
+                className=""
+                placeholder="Tìm chuyên khoa khám bệnh"
+              />
+            </div>
+          </div>
+          <div className="content-down">
+            <div className="options">
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="far fa-hospital"></i>
+                </div>
+                <div className="text-child">Khám chuyên khoa</div>
+              </div>
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="fas fa-mobile-alt"></i>
+                </div>
+                <div className="text-child">Khám từ xa</div>
+              </div>
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="fas fa-procedures"></i>
+                </div>
+                <div className="text-child">Khám tổng quát</div>
+              </div>
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="fas fa-flask"></i>
+                </div>
+                <div className="text-child">Xet nghiệm y học</div>
+              </div>
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="fas fa-user-md"></i>
+                </div>
+                <div className="text-child">Sức khỏe tinh thần</div>
+              </div>
+              <div className="option-child">
+                <div className="icon-child">
+                  <i className="fas fa-briefcase-medical"></i>
+                </div>
+                <div className="text-child">Khám nha khoa</div>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
