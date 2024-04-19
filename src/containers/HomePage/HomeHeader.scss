@@ -44,11 +44,30 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      i {
-        padding-right: 5px;
-      }
+
       .support {
-        padding-right: 5px;
+        padding-right: 50px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        i {
+          padding-right: 15px;
+          margin-right: 5px;
+        }
+      }
+      .language-vi {
+        cursor: pointer;
+        &.active {
+          color: orange;
+        }
+      }
+      // language-vi active
+      .language-en {
+        margin: 0 10px;
+        cursor: pointer;
+        &.active {
+          color: blue;
+        }
       }
     }
   }
@@ -136,7 +155,7 @@
           margin: 0 auto;
           i {
             font-size: 20px;
-            color: #49bce2;
+            color: #0088f5;
           }
         }
         .text-child {
@@ -144,7 +163,7 @@
           font-weight: 500;
           cursor: pointer;
           &:hover {
-            color: #49bce2;
+            color: #0088f5;
           }
         }
       }
