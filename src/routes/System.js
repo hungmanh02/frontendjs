@@ -19,6 +19,8 @@ class System extends Component {
               <Route path="/system/user-manage" component={UserManage} />
               <Route path="/system/product-manage" component={ProductManage} />
               <Route path="/system/user-redux" component={UserRedux} />
+              <Route path="/system/user-doctor" component={UserRedux} />
+              <Route path="/system/user-admin" component={UserRedux} />
               <Route
                 component={() => {
                   return <Redirect to={systemMenuPath} />;
