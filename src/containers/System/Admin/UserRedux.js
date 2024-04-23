@@ -1,13 +1,47 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
+import { getAllCodeService } from "../../../services/userService";
+import { LANGUAGES } from "../../../utils";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      genderArr: [],
+      positionArr: [],
+      roleArr: [],
+    };
+  }
+  async componentDidMount() {
+    try {
+      let getGender = await getAllCodeService("gender");
+      let getRole = await getAllCodeService("role");
+      let getPosition = await getAllCodeService("position");
+      if (getGender && getGender.errCode === 0) {
+        this.setState({
+          genderArr: getGender.data,
+        });
+      }
+      if (getRole && getRole.errCode === 0) {
+        this.setState({
+          roleArr: getRole.data,
+        });
+      }
+      if (getPosition && getPosition.errCode === 0) {
+        this.setState({
+          positionArr: getPosition.data,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
+    let genders = this.state.genderArr;
+    let roles = this.state.roleArr;
+    let positions = this.state.positionArr;
+    let language = this.props.language;
     return (
       <div className="user-redux-container">
         <div className="title">Learn React - Redux </div>
@@ -17,50 +51,49 @@ class UserRedux extends Component {
               <h4>Thêm mới người dùng</h4>
             </div>
             <form>
-              <div class="form-row my-3">
-                <div class="form-group col-md-6">
-                  <label for="inputEmail4">
+              <div className="form-row my-3">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputEmail4">
                     <FormattedMessage id="manage-user.email" />
                   </label>
                   <input
                     type="email"
-                    class="form-control"
+                    className="form-control"
                     id="inputEmail4"
                     placeholder="Email"
                   />
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="inputPassword4">
-                    {" "}
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPassword4">
                     <FormattedMessage id="manage-user.password" />
                   </label>
                   <input
                     type="password"
-                    class="form-control"
+                    className="form-control"
                     id="inputPassword4"
                     placeholder="Password"
                   />
                 </div>
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="inputFullName4">
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputFullName4">
                     <FormattedMessage id="manage-user.full-name" />
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="inputFullName4"
                     placeholder="Họ và Tên"
                   />
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="inputPhoneNumber">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputPhoneNumber">
                     <FormattedMessage id="manage-user.phone-number" />
                   </label>
                   <input
                     type="text"
-                    class="form-control"
+                    className="form-control"
                     id="inputPhoneNumber"
                     placeholder="
                      
@@ -69,53 +102,80 @@ class UserRedux extends Component {
                   />
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputAddress">
+              <div className="form-group">
+                <label htmlFor="inputAddress">
                   <FormattedMessage id="manage-user.address" />
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="inputAddress"
                   placeholder="Nhập địa chỉ nhà ...."
                 />
               </div>
-              <div class="form-row">
-                <div class="form-group col-md-4">
-                  <label for="inputGender">
+              <div className="form-row">
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputGender">
                     <FormattedMessage id="manage-user.gender" />
                   </label>
-                  <select id="inputGender" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
+                  <select id="inputGender" className="form-control">
+                    {genders &&
+                      genders.length > 0 &&
+                      genders.map((item, index) => {
+                        return (
+                          <option key={index}>
+                            {language === LANGUAGES.VI
+                              ? item.valueVi
+                              : item.valueEn}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="inputPosition">
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputPosition">
                     <FormattedMessage id="manage-user.position" />
                   </label>
-                  <select id="inputPosition" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
+                  <select id="inputPosition" className="form-control">
+                    {positions &&
+                      positions.length > 0 &&
+                      positions.map((item, index) => {
+                        return (
+                          <option key={index}>
+                            {language === LANGUAGES.VI
+                              ? item.valueVi
+                              : item.valueEn}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="inputRole">
+                <div className="form-group col-md-4">
+                  <label htmlFor="inputRole">
                     <FormattedMessage id="manage-user.role" />
                   </label>
-                  <select id="inputRole" class="form-control">
-                    <option selected>Choose...</option>
-                    <option>...</option>
+                  <select id="inputRole" className="form-control">
+                    {roles &&
+                      roles.length > 0 &&
+                      roles.map((item, index) => {
+                        return (
+                          <option key={index}>
+                            {language === LANGUAGES.VI
+                              ? item.valueVi
+                              : item.valueEn}
+                          </option>
+                        );
+                      })}
                   </select>
                 </div>
               </div>
-              <div class="form-group">
-                <label for="inputImage">
+              <div className="form-group">
+                <label htmlFor="inputImage">
                   <FormattedMessage id="manage-user.image" />
                 </label>
-                <input type="file" class="form-control" id="inputImage" />
+                <input type="file" className="form-control" id="inputImage" />
               </div>
-              <button type="submit" class="btn btn-primary px-4 mt-3">
+              <button type="submit" className="btn btn-primary px-4 mt-3">
                 Sign in
               </button>
             </form>
@@ -128,7 +188,9 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    language: state.app.language,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
