@@ -4,7 +4,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import UserManage from "../containers/System/UserManage";
 import ProductManage from "../containers/System/ProductManage";
 import Header from "../../src/containers/Header/Header";
-import UserRedux from "../containers/System/UserRedux";
+import UserRedux from "../containers/System/Admin/UserRedux";
 
 class System extends Component {
   render() {
