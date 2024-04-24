@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import { getAllCodeService } from "../../../services/userService";
 import { LANGUAGES } from "../../../utils";
+import * as actions from "../../../store/actions";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -12,28 +12,38 @@ class UserRedux extends Component {
       roleArr: [],
     };
   }
+
   async componentDidMount() {
-    try {
-      let getGender = await getAllCodeService("gender");
-      let getRole = await getAllCodeService("role");
-      let getPosition = await getAllCodeService("position");
-      if (getGender && getGender.errCode === 0) {
-        this.setState({
-          genderArr: getGender.data,
-        });
-      }
-      if (getRole && getRole.errCode === 0) {
-        this.setState({
-          roleArr: getRole.data,
-        });
-      }
-      if (getPosition && getPosition.errCode === 0) {
-        this.setState({
-          positionArr: getPosition.data,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+    this.props.getGenderStart();
+    // try {
+    //   let getGender = await getAllCodeService("gender");
+    //   let getRole = await getAllCodeService("role");
+    //   let getPosition = await getAllCodeService("position");
+    //   if (getGender && getGender.errCode === 0) {
+    //     this.setState({
+    //       genderArr: getGender.data,
+    //     });
+    //   }
+    //   if (getRole && getRole.errCode === 0) {
+    //     this.setState({
+    //       roleArr: getRole.data,
+    //     });
+    //   }
+    //   if (getPosition && getPosition.errCode === 0) {
+    //     this.setState({
+    //       positionArr: getPosition.data,
+    //     });
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  }
+  componentDidUpdate(prevProps, prevState, snapshort) {
+    if (prevProps.genderRedux !== this.props.genderRedux) {
+      console.log("check genderRedux", this.props.genderRedux);
+      this.setState({
+        genderArr: this.props.genderRedux,
+      });
     }
   }
 
@@ -188,13 +198,17 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log("chcek  to props:", state.admin.genders);
   return {
     language: state.app.language,
+    // genderRedux:
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    getGenderStart: () => dispatch(actions.fetchGenderStart()),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
