@@ -198,10 +198,9 @@ class UserRedux extends Component {
 }
 
 const mapStateToProps = (state) => {
-  console.log("chcek  to props:", state.admin.genders);
   return {
     language: state.app.language,
-    // genderRedux:
+    genderRedux: state.admin.genders,
   };
 };
 
