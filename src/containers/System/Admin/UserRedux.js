@@ -3,6 +3,9 @@ import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { LANGUAGES } from "../../../utils";
 import * as actions from "../../../store/actions";
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
+import "./UserRedux.scss";
 class UserRedux extends Component {
   constructor(props) {
     super(props);
@@ -10,6 +13,8 @@ class UserRedux extends Component {
       genderArr: [],
       positionArr: [],
       roleArr: [],
+      preViewImgURL: "",
+      isOpen: false,
     };
   }
 
@@ -62,6 +67,22 @@ class UserRedux extends Component {
       });
     }
   }
+  handleOnChangeImage = (event) => {
+    let data = event.target.files;
+    let file = data[0];
+    if (file) {
+      let objectUrl = URL.createObjectURL(file);
+      this.setState({
+        preViewImgURL: objectUrl,
+      });
+    }
+  };
+  openPreViewImage = () => {
+    if (!this.state.preViewImgURL) return;
+    this.setState({
+      isOpen: true,
+    });
+  };
 
   render() {
     let genders = this.state.genderArr;
@@ -201,7 +222,25 @@ class UserRedux extends Component {
                 <label htmlFor="inputImage">
                   <FormattedMessage id="manage-user.image" />
                 </label>
-                <input type="file" className="form-control" id="inputImage" />
+                <div className="preview-img-container">
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="previewImage"
+                    hidden
+                    onChange={(event) => this.handleOnChangeImage(event)}
+                  />
+                  <label htmlFor="previewImage" className="label-upload">
+                    Tải ảnh <i className="fas fa-upload"></i>
+                  </label>
+                  <div
+                    className="preview-image"
+                    style={{
+                      backgroundImage: `url(${this.state.preViewImgURL})`,
+                    }}
+                    onClick={() => this.openPreViewImage()}
+                  ></div>
+                </div>
               </div>
               <button type="submit" className="btn btn-primary px-4 mt-3">
                 Sign in
@@ -209,7 +248,12 @@ class UserRedux extends Component {
             </form>
           </div>
         </div>
-        ;
+        {this.state.isOpen === true && (
+          <Lightbox
+            mainSrc={this.state.preViewImgURL}
+            onCloseRequest={() => this.setState({ isOpen: false })}
+          />
+        )}
       </div>
     );
   }
