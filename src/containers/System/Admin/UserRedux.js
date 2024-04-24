@@ -14,7 +14,11 @@ class UserRedux extends Component {
   }
 
   async componentDidMount() {
+    // Redux
     this.props.getGenderStart();
+    this.props.getPositionStart();
+    this.props.getRoleStart();
+    //React
     // try {
     //   let getGender = await getAllCodeService("gender");
     //   let getRole = await getAllCodeService("role");
@@ -45,6 +49,18 @@ class UserRedux extends Component {
         genderArr: this.props.genderRedux,
       });
     }
+    if (prevProps.positionRedux !== this.props.positionRedux) {
+      console.log("check position Redux", this.props.positionRedux);
+      this.setState({
+        positionArr: this.props.positionRedux,
+      });
+    }
+    if (prevProps.roleRedux !== this.props.roleRedux) {
+      console.log("check role Redux", this.props.roleRedux);
+      this.setState({
+        roleArr: this.props.roleRedux,
+      });
+    }
   }
 
   render() {
@@ -52,9 +68,11 @@ class UserRedux extends Component {
     let roles = this.state.roleArr;
     let positions = this.state.positionArr;
     let language = this.props.language;
+    // let isGetGender = this.props.isLoadingGender;
     return (
       <div className="user-redux-container">
         <div className="title">Learn React - Redux </div>
+        {/* <div> {isGetGender === true ? "loading gender" : ""}</div> */}
         <div className="user-redux-body">
           <div className="container">
             <div className="">
@@ -201,12 +219,17 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     genderRedux: state.admin.genders,
+    positionRedux: state.admin.positions,
+    roleRedux: state.admin.roles,
+    isLoadingGender: state.admin.isLoadingGender,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getGenderStart: () => dispatch(actions.fetchGenderStart()),
+    getPositionStart: () => dispatch(actions.fetchPositionStart()),
+    getRoleStart: () => dispatch(actions.fetchRoleStart()),
   };
 };
 
