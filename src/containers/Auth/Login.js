@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { push } from "connected-react-router";
-
 import * as actions from "../../store/actions";
 import "./Login.scss";
 // import { FormattedMessage } from "react-intl";
@@ -30,12 +29,13 @@ class Login extends Component {
     });
   };
   handleSubmitLogin = async () => {
+    var password = this.state.password;
+
     this.setState({
       errMessage: "",
     });
     try {
-      let data = await handleLoginApi(this.state.email, this.state.password);
-      console.log(this.state);
+      let data = await handleLoginApi(this.state.email, password);
 
       if (data && data.errCode !== 0) {
         this.setState({
