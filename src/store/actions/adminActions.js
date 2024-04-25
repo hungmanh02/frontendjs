@@ -2,6 +2,7 @@ import actionTypes from "./actionTypes";
 import {
   createNewUserService,
   getAllCodeService,
+  getAllUsers,
 } from "../../services/userService";
 
 export const fetchGenderStart = () => {
@@ -73,6 +74,7 @@ export const fetchRoleSuccess = (roleData) => ({
 export const fetchRoleFailed = () => ({
   type: actionTypes.FETCH_ROLE_FAILED,
 });
+// create ussr
 export const createUserStart = (data) => {
   return async (dispatch, getState) => {
     try {
@@ -80,6 +82,7 @@ export const createUserStart = (data) => {
       console.log("check create user redux:", res);
       if (res && res.errCode === 0) {
         dispatch(createUserSuccess());
+        dispatch(fetchAllUserStart());
       } else {
         dispatch(createUserFailed());
       }
@@ -95,4 +98,28 @@ export const createUserSuccess = () => ({
 
 export const createUserFailed = () => ({
   type: actionTypes.CREATE_USER_FAILED,
+});
+// fetch all user
+export const fetchAllUserStart = () => {
+  return async (dispatch, getState) => {
+    try {
+      let res = await getAllUsers("ALL");
+      // console.log("check res admin actions user:", res);
+      if (res && res.errCode === 0) {
+        dispatch(fetchAllUserSuccess(res.users));
+      } else {
+        dispatch(fetchAllUserFailed());
+      }
+    } catch (error) {
+      dispatch(fetchAllUserFailed());
+      console.log("fetchAllUserFailed error", error);
+    }
+  };
+};
+export const fetchAllUserSuccess = (userData) => ({
+  type: actionTypes.FETCH_ALL_USER_SUCCESS,
+  users: userData,
+});
+export const fetchAllUserFailed = () => ({
+  type: actionTypes.FETCH_ALL_USER_FAILED,
 });

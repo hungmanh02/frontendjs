@@ -128,8 +128,8 @@ class UserRedux extends Component {
       isValid,
     };
   };
-  handleSaveUser = (e) => {
-    e.preventDefault();
+  handleSaveUser = () => {
+    // e.preventDefault();
     let isValid = this.checkValidateInput();
     if (isValid === false) return;
     // fire redux action
@@ -353,12 +353,12 @@ class UserRedux extends Component {
               <button
                 type="submit"
                 className="btn btn-primary px-4 mt-3"
-                onClick={(e) => this.handleSaveUser(e)}
+                onClick={() => this.handleSaveUser()}
               >
                 <FormattedMessage id="manage-user.save" />
               </button>
             </form>
-            <div className="mt-2">
+            <div className="mt-2 mb-5">
               <TableManageUser />
             </div>
           </div>
@@ -390,6 +390,7 @@ const mapDispatchToProps = (dispatch) => {
     getPositionStart: () => dispatch(actions.fetchPositionStart()),
     getRoleStart: () => dispatch(actions.fetchRoleStart()),
     createUserStart: (data) => dispatch(actions.createUserStart(data)),
+    fetchAllUserRedux: () => dispatch(actions.fetchAllUserStart()),
   };
 };
 
