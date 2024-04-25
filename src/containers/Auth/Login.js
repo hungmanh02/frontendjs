@@ -35,6 +35,7 @@ class Login extends Component {
     });
     try {
       let data = await handleLoginApi(this.state.email, this.state.password);
+      console.log(this.state);
 
       if (data && data.errCode !== 0) {
         this.setState({
