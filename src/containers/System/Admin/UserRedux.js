@@ -80,6 +80,19 @@ class UserRedux extends Component {
         role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : "",
       });
     }
+    if (prevProps.listUserRedux !== this.props.listUserRedux) {
+      this.setState({
+        email: "",
+        password: "",
+        fullName: "",
+        phoneNumber: "",
+        address: "",
+        gender: "",
+        position: "",
+        role: "",
+        avatar: "",
+      });
+    }
   }
   handleOnChangeImage = (event) => {
     let data = event.target.files;
@@ -124,12 +137,10 @@ class UserRedux extends Component {
         break;
       }
     }
-    return {
-      isValid,
-    };
+    return isValid;
   };
-  handleSaveUser = () => {
-    // e.preventDefault();
+  handleSaveUser = (e) => {
+    e.preventDefault();
     let isValid = this.checkValidateInput();
     if (isValid === false) return;
     // fire redux action
@@ -353,7 +364,7 @@ class UserRedux extends Component {
               <button
                 type="submit"
                 className="btn btn-primary px-4 mt-3"
-                onClick={() => this.handleSaveUser()}
+                onClick={(e) => this.handleSaveUser(e)}
               >
                 <FormattedMessage id="manage-user.save" />
               </button>
@@ -381,6 +392,7 @@ const mapStateToProps = (state) => {
     positionRedux: state.admin.positions,
     roleRedux: state.admin.roles,
     isLoadingGender: state.admin.isLoadingGender,
+    listUserRedux: state.admin.users,
   };
 };
 

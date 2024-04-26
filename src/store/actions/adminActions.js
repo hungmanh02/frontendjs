@@ -106,7 +106,7 @@ export const fetchAllUserStart = () => {
       let res = await getAllUsers("ALL");
       // console.log("check res admin actions user:", res);
       if (res && res.errCode === 0) {
-        dispatch(fetchAllUserSuccess(res.users));
+        dispatch(fetchAllUserSuccess(res.users.reverse()));
       } else {
         dispatch(fetchAllUserFailed());
       }
