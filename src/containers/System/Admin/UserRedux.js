@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
-import { LANGUAGES, CRUD_ACTION } from "../../../utils";
+import { LANGUAGES, CRUD_ACTION, CommonUtils } from "../../../utils";
 import * as actions from "../../../store/actions";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
@@ -102,14 +102,15 @@ class UserRedux extends Component {
       });
     }
   }
-  handleOnChangeImage = (event) => {
+  handleOnChangeImage = async (event) => {
     let data = event.target.files;
     let file = data[0];
     if (file) {
+      let base64 = await CommonUtils.getBase64(file);
       let objectUrl = URL.createObjectURL(file);
       this.setState({
         preViewImgURL: objectUrl,
-        avatar: file,
+        avatar: base64,
       });
     }
   };
@@ -138,7 +139,7 @@ class UserRedux extends Component {
       gender: user.gender,
       role: user.roleId,
       position: user.positionId,
-      avatar: "",
+      image: "",
       action: CRUD_ACTION.EDIT,
     });
   };
@@ -182,6 +183,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
+        image: this.state.avatar,
       });
     }
     // fire redux action edit user
@@ -196,7 +198,7 @@ class UserRedux extends Component {
         gender: this.state.gender,
         roleId: this.state.role,
         positionId: this.state.position,
-        // avatar: this.state.avatar,
+        image: this.state.avatar,
       });
     }
   };
