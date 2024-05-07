@@ -32,6 +32,9 @@ const actionTypes = Object.freeze({
   // fetch all user
   FETCH_ALL_USER_SUCCESS: "FETCH_ALL_USER_SUCCESS",
   FETCH_ALL_USER_FAILED: "FETCH_ALL_USER_FAILED",
+  // fetch top doctor home
+  FETCH_TOP_DOCTOR_HOME_SUCCESS: "FETCH_TOP_DOCTOR_HOME_SUCCESS",
+  FETCH_TOP_DOCTOR_HOME_FAILED: "FETCH_TOP_DOCTOR_HOME_FAILED",
 });
 
 export default actionTypes;
