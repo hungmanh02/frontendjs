@@ -23,6 +23,7 @@ class TableManageUser extends Component {
       contentMarkdown: "",
       contentHTML: "",
       selectedOption: "",
+      description: "",
     };
   }
   handleEditUser = (user) => {
@@ -55,6 +56,11 @@ class TableManageUser extends Component {
     this.setState({ selectedOption });
     console.log("Option selected", selectedOption);
   };
+  handleOnchangeDescription = (event) => {
+    this.setState({
+      description: event.target.value,
+    });
+  };
 
   render() {
     return (
@@ -71,7 +77,12 @@ class TableManageUser extends Component {
           </div>
           <div className="content-right form-group">
             <label>Thông tin giới thiệu</label>
-            <textarea className="form-control" rows="4"></textarea>
+            <textarea
+              className="form-control"
+              rows="4"
+              onChange={(event) => this.handleOnchangeDescription(event)}
+              value={this.state.description}
+            ></textarea>
           </div>
         </div>
         <div className="manage-doctor-editor">
