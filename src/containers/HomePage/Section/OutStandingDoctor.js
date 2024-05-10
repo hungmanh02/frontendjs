@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
 // import { FormattedMessage } from "react-intl";
 import Slider from "react-slick";
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from "../../../utils";
+import { history } from "./../../../redux";
 class OutStandingDoctor extends Component {
   constructor(props) {
     super(props);
@@ -21,6 +23,10 @@ class OutStandingDoctor extends Component {
   componentDidMount() {
     this.props.loadTopDoctors();
   }
+  handleViewDetailDoctor = (doctor) => {
+    console.log("check view infor :", doctor);
+    this.props.history.push(`detail-doctor/${doctor.id}`);
+  };
   render() {
     let allDoctorHome = this.state.arrDoctors;
     let { language } = this.props;
@@ -45,7 +51,11 @@ class OutStandingDoctor extends Component {
                     );
                   }
                   return (
-                    <div className="section-customize" key={index}>
+                    <div
+                      className="section-customize"
+                      key={index}
+                      onClick={() => this.handleViewDetailDoctor(item)}
+                    >
                       <div className="customize-border">
                         <div className="outer-bg">
                           <div
@@ -85,4 +95,6 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(OutStandingDoctor)
+);
