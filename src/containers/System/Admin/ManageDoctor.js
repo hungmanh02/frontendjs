@@ -7,7 +7,8 @@ import MarkdownIt from "markdown-it/index";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
-import { LANGUAGES } from "../../../utils";
+import { CRUD_ACTION, LANGUAGES } from "../../../utils";
+import { getDetailInforDoctor } from "../../../services/userService";
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -21,6 +22,7 @@ class TableManageUser extends Component {
       selectedOption: "",
       description: "",
       allDoctor: "",
+      hasOldData: false,
     };
   }
   handleEditUser = (user) => {
@@ -62,17 +64,36 @@ class TableManageUser extends Component {
     });
   };
   handleSaveContentMarkdown = () => {
+    let { hasOldData } = this.state;
     this.props.saveDetailDoctor({
       contentHtml: this.state.contentHtml,
       contentMarkdown: this.state.contentMarkdown,
       description: this.state.description,
       doctorId: this.state.selectedOption.value,
+      action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE,
     });
     console.log("check text markdown :", this.state);
   };
-  handleChange = (selectedOption) => {
+  handleChangeSelect = async (selectedOption) => {
     this.setState({ selectedOption });
-    console.log("Option selected", selectedOption);
+    let res = await getDetailInforDoctor(selectedOption.value);
+    if (res && res.errCode === 0 && res.data && res.data.Markdown) {
+      let markdown = res.data.Markdown;
+      this.setState({
+        contentHtml: markdown.contentHtml,
+        contentMarkdown: markdown.contentMarkdown,
+        description: markdown.description,
+        hasOldData: true,
+      });
+    } else {
+      this.setState({
+        contentHtml: "",
+        contentMarkdown: "",
+        description: "",
+        hasOldData: false,
+      });
+    }
+    console.log("check option selected ", res);
   };
   handleOnchangeDescription = (event) => {
     this.setState({
@@ -96,6 +117,7 @@ class TableManageUser extends Component {
   };
 
   render() {
+    let { hasOldData } = this.state;
     return (
       <div className="manage-doctor-container">
         <div className="manage-doctor-title">Tạo thêm thông tin bác sĩ</div>
@@ -105,7 +127,7 @@ class TableManageUser extends Component {
             <Select
               options={this.state.allDoctor}
               value={this.state.selectedOption}
-              onChange={this.handleChange}
+              onChange={this.handleChangeSelect}
             />
           </div>
           <div className="content-right form-group">
@@ -123,13 +145,22 @@ class TableManageUser extends Component {
             style={{ height: "500px" }}
             renderHTML={(text) => mdParser.render(text)}
             onChange={this.handleEditorChange}
+            value={this.state.contentMarkdown}
           />
         </div>
         <button
           onClick={() => this.handleSaveContentMarkdown()}
-          className="save-content-doctor"
+          className={
+            hasOldData === true
+              ? "save-content-doctor"
+              : "create-content-doctor"
+          }
         >
-          Lưu thông tin
+          {hasOldData === true ? (
+            <span>Lưu thông tin</span>
+          ) : (
+            <span>Tạo thông tin</span>
+          )}
         </button>
       </div>
     );
