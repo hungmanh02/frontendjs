@@ -60,6 +60,11 @@
       "manage-specialty": "specialties Management",
       "handbook": "Handbook",
       "manage-handbook": "handbook Management"
+    },
+    "doctor": {
+      "manage-schedule": "Manage Doctor's schedule",
+      "schedule": "schedule",
+      "manage-doctor": "Doctors Management"
     }
   },
   "manage-user": {
