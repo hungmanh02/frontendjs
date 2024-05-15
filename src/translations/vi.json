@@ -80,5 +80,8 @@
     "image": "Ảnh đại diện",
     "save": "Lưu",
     "edit": "Lưu thay đổi"
+  },
+  "manage-schedule": {
+    "title": "Quản lý kế hoạch khám bệnh"
   }
 }

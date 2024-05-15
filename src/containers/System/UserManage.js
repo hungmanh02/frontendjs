@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from "react-intl";
 import "./UserManage.scss";
 import { connect } from "react-redux";
 import { emitter } from "../../utils/emitter";

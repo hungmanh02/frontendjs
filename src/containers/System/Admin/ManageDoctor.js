@@ -111,6 +111,7 @@ class TableManageUser extends Component {
         object.label = language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = item.id;
         result.push(object);
+        return result;
       });
     }
     return result;
@@ -176,7 +177,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchAllDoctor: (id) => dispatch(actions.fetchAllDoctor()),
+    fetchAllDoctor: () => dispatch(actions.fetchAllDoctor()),
     saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
   };
 };
