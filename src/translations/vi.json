@@ -82,6 +82,9 @@
     "edit": "Lưu thay đổi"
   },
   "manage-schedule": {
-    "title": "Quản lý kế hoạch khám bệnh"
+    "title": "Quản lý kế hoạch khám bệnh",
+    "choose-doctor": "Chọn Bác sĩ",
+    "choose-date": "Chọn ngày",
+    "save": "Lưu thông tin"
   }
 }

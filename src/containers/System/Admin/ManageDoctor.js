@@ -93,7 +93,6 @@ class TableManageUser extends Component {
         hasOldData: false,
       });
     }
-    console.log("check option selected ", res);
   };
   handleOnchangeDescription = (event) => {
     this.setState({
