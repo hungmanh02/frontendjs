@@ -13,16 +13,13 @@
     gap: 20px;
     flex-wrap: wrap;
     .btn-schedule {
-      padding: 5px 15px;
       border: 1px solid gray;
-      padding-bottom: 5px;
+      &.active {
+        background: orange;
+      }
     }
   }
   .btn-save-schedule {
     margin-top: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-    padding-top: 5px;
-    padding-bottom: 5px;
   }
 }
