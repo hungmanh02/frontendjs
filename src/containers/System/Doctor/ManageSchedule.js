@@ -111,7 +111,9 @@ class ManageSchedule extends Component {
       }
       
       let res = await saveBulkScheduleDoctor({
-        arrSchedule:result
+        arrSchedule:result,
+        doctorId:selectedDoctor.value,
+        formatedDate:formatedDate
       });
       console.log('check res bulk create schedule:',res);
     }
