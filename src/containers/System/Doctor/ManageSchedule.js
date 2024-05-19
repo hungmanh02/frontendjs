@@ -94,9 +94,9 @@ class ManageSchedule extends Component {
       toast.error("Invalid date !");
       return;
     }
+    let result = [];
     if (rangeTime && rangeTime.length > 0) {
       let selectedTime = rangeTime.filter((item) => item.isSelected === true);
-      let result = [];
       if (selectedTime && selectedTime.length > 0) {
         selectedTime.map((schedule, index) => {
           let objectTime = {};
@@ -110,13 +110,13 @@ class ManageSchedule extends Component {
         return;
       }
       
-      let res = await saveBulkScheduleDoctor({
-        arrSchedule:result,
-        doctorId:selectedDoctor.value,
-        formatedDate:formatedDate
-      });
-      console.log('check res bulk create schedule:',res);
     }
+    let res = await saveBulkScheduleDoctor({
+      arrSchedule:result,
+      doctorId:selectedDoctor.value,
+      formatedDate:formatedDate
+    });
+    console.log('check res bulk create schedule:',res);
   };
   render() {
     let { rangeTime } = this.state;
