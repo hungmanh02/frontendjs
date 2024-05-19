@@ -6,9 +6,10 @@ import * as actions from "../../../store/actions";
 import Select from "react-select";
 import { LANGUAGES, dateFormat } from "../../../utils";
 import DatePicker from "../../../components/Input/DatePicker";
-import moment from "moment";
 import { toast } from "react-toastify";
 import _, { result } from "lodash";
+import {saveBulkScheduleDoctor} from '../../../services/userService'
+import moment from "moment/moment";
 class ManageSchedule extends Component {
   constructor(props) {
     super(props);
@@ -81,9 +82,10 @@ class ManageSchedule extends Component {
     }
     return result;
   };
-  handleSaveSchedule = () => {
+  handleSaveSchedule = async() => {
     let { rangeTime, selectedDoctor, currentDate } = this.state;
-    let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+    // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
+    let formatedDate = new Date(currentDate).getTime();
     if (selectedDoctor && _.isEmpty(selectedDoctor)) {
       toast.error("Invalid select doctor !");
       return;
@@ -100,15 +102,18 @@ class ManageSchedule extends Component {
           let objectTime = {};
           objectTime.doctorId = selectedDoctor.value;
           objectTime.date = formatedDate;
-          objectTime.time = schedule.keyMap;
+          objectTime.timeType = schedule.keyMap;
           result.push(objectTime);
         });
       } else {
         toast.error("Invalid selected time!");
         return;
       }
-      console.log("check object time schedule:", result);
-      // return result;
+      
+      let res = await saveBulkScheduleDoctor({
+        arrSchedule:result
+      });
+      console.log('check res bulk create schedule:',res);
     }
   };
   render() {
