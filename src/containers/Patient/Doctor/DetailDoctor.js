@@ -63,7 +63,9 @@ class DetailDoctor extends Component {
             </div>
           </div>
           <div className="schedule-doctor">
-            <DoctorSchedule/>
+            <DoctorSchedule
+            doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id:-1}
+            />
           </div>
           <div className="detail-infor-doctor">
             {detailDoctor &&
