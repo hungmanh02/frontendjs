@@ -1,50 +1,58 @@
-.doctor-schedule-container{
-    border-right: 1px solid rgb(18, 238, 65);
-    height: 100%;
-    .all-schedule{
-        select{
-            border: none;
-            outline: none;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-            padding-top: 10px;
-            padding-bottom: 5px;
-            color: #337ab7;
-            font-weight: 600;
-            option{
-                cursor: pointer;
-            }
-        }
+.doctor-schedule-container {
+  border-right: 1px solid rgb(18, 238, 65);
+  height: 100%;
+  .all-schedule {
+    select {
+      border: none;
+      outline: none;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
+      padding-top: 10px;
+      padding-bottom: 5px;
+      color: #337ab7;
+      font-weight: 600;
+      option {
+        cursor: pointer;
+      }
     }
-    .all-available-time{
-        .text-calendar{
-            margin: 10px 0;
-            color: #333;
-            i{
-            }
-            span{
-                margin-left: 5px;
-                text-transform: uppercase;
-            }
-        }
-        .time-content{
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            button{
-
-                padding: 8px 10px;
-                border: none;
-                outline: none;
-                background: #fff04b;
-                min-width: 120px;
-                border-radius: 3px;
-                font-weight: 600;
-                color: #333;
-                &:hover{
-                    background: #45c3d2;
-                }
-            }
-        }
+  }
+  .all-available-time {
+    .text-calendar {
+      margin: 10px 0;
+      color: #333;
+      i {
+      }
+      span {
+        margin-left: 5px;
+        text-transform: uppercase;
+      }
     }
+    .time-content {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      button {
+        padding: 8px 10px;
+        border: none;
+        outline: none;
+        background: #fff04b;
+        border-radius: 3px;
+        font-weight: 600;
+        color: #333;
+        &:hover {
+          background: #45c3d2;
+        }
+      }
+      .btn-vie {
+        min-width: 120px;
+      }
+      .btn-en {
+        min-width: 170px;
+      }
+      .no-schedule {
+        font-style: italic;
+        font-size: 14px;
+      }
+    }
+  }
 }

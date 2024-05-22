@@ -7,7 +7,7 @@ import Select from "react-select";
 import { LANGUAGES, dateFormat } from "../../../utils";
 import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
-import _, { result } from "lodash";
+import _,{ result } from "lodash";
 import {saveBulkScheduleDoctor} from '../../../services/userService'
 import moment from "moment/moment";
 class ManageSchedule extends Component {
@@ -116,11 +116,17 @@ class ManageSchedule extends Component {
       doctorId:selectedDoctor.value,
       formatedDate:formatedDate
     });
-    console.log('check res bulk create schedule:',res);
+     if(res && res.errCode === 0){
+      toast.success('lưu thông tin thành công');
+     }else{
+      toast.error('error save bulk schedule doctor ');
+      console.log('save bulk schedule doctor >>> error:',res);
+     }
   };
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
+    let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
     return (
       <div className="manage-schedule-container">
         <div className="m-schedule-title">
@@ -146,7 +152,7 @@ class ManageSchedule extends Component {
                 onChange={this.handleOnChangeDatePicker}
                 className="form-control"
                 value={this.state.currentDate}
-                minDate={new Date()}
+                minDate={yesterday}
               />
             </div>
             <div className="col-12 pick-hour-container">
