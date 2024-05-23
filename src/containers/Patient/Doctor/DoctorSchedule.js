@@ -35,18 +35,18 @@ class DoctorSchedule extends Component {
     for(let i=0; i<7;i++){
       let object={};
       if(language === LANGUAGES.VI){
-        if(i ===0){
-          let ddMM=moment(new Date()).format('DD/MM');
-          let today=`Hôm nay - ${ddMM}`;
+        if(i===0){
+          let ddMMVi=moment(new Date()).format('DD/MM');
+          let today=`Hôm nay - ${ddMMVi}`;
           object.label=today;
         }else{
-          let labelVi=moment(new Date()).add(i,'days').format('DD/MM');
+          let labelVi=moment(new Date()).add(i,'days').format('dddd - DD/MM');
           object.label= this.capitalizeFirstLetter(labelVi);
         }
       }else{
         if(i===0){
-          let ddMM=moment(new Date()).format('DD/MM');
-          let today=`Today - ${ddMM}`;
+          let ddMMEn=moment(new Date()).format('DD/MM');
+          let today=`Today - ${ddMMEn}`;
           object.label=today;
         }else{
           object.label=moment(new Date()).add(i,'days').locale('en').format('dddd - DD/MM');
@@ -109,13 +109,25 @@ class DoctorSchedule extends Component {
           </div>
           <div className="time-content">
             {
-               allAvailableTime && allAvailableTime.length>0 ? allAvailableTime.map((item,index)=>{
+               allAvailableTime && allAvailableTime.length>0 ? 
+               <>
+               <div className="time-content-btns">
+
+               
+               {allAvailableTime.map((item,index)=>{
                 let timeDisplay=language === LANGUAGES.VI?item.timeTypeData.valueVi:item.timeTypeData.valueEn 
                 return (
 
                   <button key={index} className={language===LANGUAGES.VI ? "btn-vie":"btn-en"}>{timeDisplay}</button>
                 )
-               }):
+               })}
+               </div>
+               <div className="book-free">
+                <span>
+                  <FormattedMessage id="patient.detail-doctor.choose"/> <i className="far fa-hand-point-up"></i> <FormattedMessage id="patient.detail-doctor.book-free"/>
+                </span>
+               </div>
+               </>:
                <div className="no-schedule"><FormattedMessage id="patient.detail-doctor.no-schedule"/></div>
             }
           </div>
