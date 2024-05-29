@@ -7,8 +7,8 @@ import Select from "react-select";
 import { LANGUAGES, dateFormat } from "../../../utils";
 import DatePicker from "../../../components/Input/DatePicker";
 import { toast } from "react-toastify";
-import _,{ result } from "lodash";
-import {saveBulkScheduleDoctor} from '../../../services/userService'
+import _, { result } from "lodash";
+import { saveBulkScheduleDoctor } from '../../../services/userService'
 import moment from "moment/moment";
 class ManageSchedule extends Component {
   constructor(props) {
@@ -82,7 +82,7 @@ class ManageSchedule extends Component {
     }
     return result;
   };
-  handleSaveSchedule = async() => {
+  handleSaveSchedule = async () => {
     let { rangeTime, selectedDoctor, currentDate } = this.state;
     // let formatedDate = moment(currentDate).format(dateFormat.SEND_TO_SERVER);
     let formatedDate = new Date(currentDate).getTime();
@@ -109,24 +109,24 @@ class ManageSchedule extends Component {
         toast.error("Invalid selected time!");
         return;
       }
-      
+
     }
     let res = await saveBulkScheduleDoctor({
-      arrSchedule:result,
-      doctorId:selectedDoctor.value,
-      formatedDate:formatedDate
+      arrSchedule: result,
+      doctorId: selectedDoctor.value,
+      formatedDate: formatedDate
     });
-     if(res && res.errCode === 0){
+    if (res && res.errCode === 0) {
       toast.success('lưu thông tin thành công');
-     }else{
+    } else {
       toast.error('error save bulk schedule doctor ');
-      console.log('save bulk schedule doctor >>> error:',res);
-     }
+      console.log('save bulk schedule doctor >>> error:', res);
+    }
   };
   render() {
     let { rangeTime } = this.state;
     let { language } = this.props;
-    let yesterday = new Date(new Date().setDate(new Date().getDate()-1));
+    let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
     return (
       <div className="manage-schedule-container">
         <div className="m-schedule-title">

@@ -94,5 +94,15 @@
       "choose":"Choose",
       "book-free":"and book (Free)"
     }
+  },
+  "admin":{
+    "manage-doctor":{
+      "title":"Create more doctor information",
+      "select-doctor-title":"Choosing a doctor",
+      "select-doctor-placeholder":"Choosing a doctor ....",
+      "intro":"Introductory Information",
+      "add":"Create information",
+      "save":"Save information"
+    }
   }
 }

@@ -9,20 +9,35 @@ import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
 import { CRUD_ACTION, LANGUAGES } from "../../../utils";
 import { getDetailInforDoctor } from "../../../services/userService";
+import { FormattedMessage } from "react-intl";
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class TableManageUser extends Component {
+class ManageDoctor extends Component {
   constructor(props) {
     super(props);
     this.state = {
+
+      // save to Markdown table
       contentMarkdown: "",
       contentHtml: "",
-      selectedOption: "",
       description: "",
-      allDoctor: "",
+      allDoctor: [],
+      selectedDoctor: "",
       hasOldData: false,
+
+      // save to doctor infor table
+      allPrice: [],
+      allPayment: [],
+      allProvince: [],
+      selectedPrice: "",
+      selectedPayment: "",
+      selectedProvince: "",
+      nameClinic:"",
+      addressClinic:"",
+      note:"",
+      count:"",
     };
   }
   handleEditUser = (user) => {
@@ -69,14 +84,14 @@ class TableManageUser extends Component {
       contentHtml: this.state.contentHtml,
       contentMarkdown: this.state.contentMarkdown,
       description: this.state.description,
-      doctorId: this.state.selectedOption.value,
+      doctorId: this.state.selectedDoctor.value,
       action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE,
     });
     console.log("check text markdown :", this.state);
   };
-  handleChangeSelect = async (selectedOption) => {
-    this.setState({ selectedOption });
-    let res = await getDetailInforDoctor(selectedOption.value);
+  handleChangeSelect = async (selectedDoctor) => {
+    this.setState({ selectedDoctor });
+    let res = await getDetailInforDoctor(selectedDoctor.value);
     if (res && res.errCode === 0 && res.data && res.data.Markdown) {
       let markdown = res.data.Markdown;
       this.setState({
@@ -120,25 +135,54 @@ class TableManageUser extends Component {
     let { hasOldData } = this.state;
     return (
       <div className="manage-doctor-container">
-        <div className="manage-doctor-title">Tạo thêm thông tin bác sĩ</div>
+        <div className="manage-doctor-title"><FormattedMessage id="admin.manage-doctor.title"/></div>
         <div className="manage-doctor-infor">
           <div className="content-left form-group">
-            <label>Chọn bác sĩ</label>
+            <label><FormattedMessage id="admin.manage-doctor.select-doctor-title"/></label>
             <Select
               options={this.state.allDoctor}
-              value={this.state.selectedOption}
+              value={this.state.selectedDoctor}
               onChange={this.handleChangeSelect}
+              placeholder={<FormattedMessage id="admin.manage-doctor.select-doctor-placeholder"/>}
+              
             />
           </div>
           <div className="content-right form-group">
-            <label>Thông tin giới thiệu</label>
+            <label><FormattedMessage id="admin.manage-doctor.intro"/></label>
             <textarea
               className="form-control"
-              rows="4"
               onChange={(event) => this.handleOnchangeDescription(event)}
               value={this.state.description}
             ></textarea>
           </div>
+        </div>
+        <div className="manage-doctor-extra row">
+          <div className="col-4 form-group">
+            <label>Chọn giá</label>
+            <input className="form-control"/>
+          </div>
+          <div className="col-4 form-group">
+            <label>Chọn phương thức thanh toán</label>
+            <input className="form-control"/>
+          </div>
+          <div className="col-4 form-group">
+            <label>Chọn tỉnh thành</label>
+            <input className="form-control"/>
+          </div>
+          
+          <div className="col-4 form-group">
+            <label>Tên phòng khám</label>
+            <input className="form-control"/>
+          </div>
+          <div className="col-4 form-group">
+            <label>Địa chỉ phòng khám</label>
+            <input className="form-control"/>
+          </div>
+          <div className="col-4 form-group">
+            <label>Ghi chú</label>
+            <input className="form-control"/>
+          </div>
+
         </div>
         <div className="manage-doctor-editor">
           <MdEditor
@@ -157,9 +201,9 @@ class TableManageUser extends Component {
           }
         >
           {hasOldData === true ? (
-            <span>Lưu thông tin</span>
+            <span><FormattedMessage id="admin.manage-doctor.save"/></span>
           ) : (
-            <span>Tạo thông tin</span>
+            <span><FormattedMessage id="admin.manage-doctor.add"/></span>
           )}
         </button>
       </div>
@@ -181,4 +225,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
+export default connect(mapStateToProps, mapDispatchToProps)(ManageDoctor);
