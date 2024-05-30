@@ -102,7 +102,14 @@
       "select-doctor-placeholder":"Choosing a doctor ....",
       "intro":"Introductory Information",
       "add":"Create information",
-      "save":"Save information"
+      "save":"Save information",
+      "price":"Medical examination prices",
+      "payment":"Payment methods",
+      "province":"Provinces",
+      "nameClinic":"Clinic's name",
+      "addressClinic":"Clinic's address",
+      "note":"Note"
+
     }
   }
 }
