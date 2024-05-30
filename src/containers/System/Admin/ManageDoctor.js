@@ -57,19 +57,40 @@ class ManageDoctor extends Component {
 
   componentDidMount() {
     this.props.fetchAllDoctor();
+    this.props.getAllRequiredDoctorInfor();
   }
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.allDoctor !== this.props.allDoctor) {
-      let dataSelect = this.buildDataInputSelect(this.props.allDoctor);
+      let dataSelect = this.buildDataInputSelect(this.props.allDoctor,'USERS');
       this.setState({
         allDoctor: dataSelect,
       });
     }
     if (prevProps.language !== this.props.language) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctor);
+      let {resPrice,resPayment,resProvince}=this.props.allRequiredDoctorInfor;
+      let dataSelectPrice = this.buildDataInputSelect(resPrice);
+      let dataSelectPayment = this.buildDataInputSelect(resPayment);
+      let dataSelectProvince = this.buildDataInputSelect(resProvince);
       this.setState({
         allDoctor: dataSelect,
+        allPrice:dataSelectPrice,
+        allPayment:dataSelectPayment,
+        allProvince:dataSelectProvince
       });
+    }
+    if(prevProps.allRequiredDoctorInfor !== this.props.allRequiredDoctorInfor){
+      let {resPrice,resPayment,resProvince}=this.props.allRequiredDoctorInfor;
+      let dataSelectPrice = this.buildDataInputSelect(resPrice);
+      let dataSelectPayment = this.buildDataInputSelect(resPayment);
+      let dataSelectProvince = this.buildDataInputSelect(resProvince);
+      console.log(dataSelectPrice)
+      this.setState({
+        allPrice:dataSelectPrice,
+        allPayment:dataSelectPayment,
+        allProvince:dataSelectProvince
+      })
+
     }
   }
   handleEditorChange = ({ html, text }) => {
@@ -114,14 +135,14 @@ class ManageDoctor extends Component {
       description: event.target.value,
     });
   };
-  buildDataInputSelect = (inputData) => {
+  buildDataInputSelect = (inputData,type) => {
     let result = [];
     let { language } = this.props;
     if (inputData && inputData.length > 0) {
       inputData.map((item, index) => {
         let object = {};
-        let labelVi = `${item.fullName}`;
-        let labelEn = `${item.fullName}`;
+        let labelVi = type === "USERS"? `${item.fullName}`:item.valueVi;
+        let labelEn = type === "USERS"? `${item.fullName}`:item.valueEn;
         object.label = language === LANGUAGES.VI ? labelVi : labelEn;
         object.value = item.id;
         result.push(object);
@@ -159,15 +180,33 @@ class ManageDoctor extends Component {
         <div className="manage-doctor-extra row">
           <div className="col-4 form-group">
             <label>Chọn giá</label>
-            <input className="form-control"/>
+            <Select
+              options={this.state.allPrice}
+              value={this.state.selectedPrice}
+              // onChange={this.handleChangeSelect}
+              placeholder={"Chọn giá ..."}
+              
+            />
           </div>
           <div className="col-4 form-group">
             <label>Chọn phương thức thanh toán</label>
-            <input className="form-control"/>
+            <Select
+              options={this.state.allPayment}
+              value={this.state.selectedPayment}
+              // onChange={this.handleChangeSelect}
+              placeholder={'Chọn phương thức thanh toán ...'}
+              
+            />
           </div>
           <div className="col-4 form-group">
             <label>Chọn tỉnh thành</label>
-            <input className="form-control"/>
+            <Select
+              options={this.state.allProvince}
+              value={this.state.selectedProvince}
+              // onChange={this.handleChangeSelect}
+              placeholder={"Chọn tỉnh thành ..."}
+              
+            />
           </div>
           
           <div className="col-4 form-group">
@@ -215,12 +254,14 @@ const mapStateToProps = (state) => {
   return {
     language: state.app.language,
     allDoctor: state.admin.allDoctor,
+    allRequiredDoctorInfor:state.admin.allRequiredDoctorInfor
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchAllDoctor: () => dispatch(actions.fetchAllDoctor()),
+    getAllRequiredDoctorInfor: () => dispatch(actions.getAllRequiredDoctorInfor()),
     saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
   };
 };
