@@ -114,7 +114,8 @@ class ManageDoctor extends Component {
       addressClinic: this.state.addressClinic,
       note: this.state.note,
     });
-    console.log("check text markdown :", this.state);
+    console.log("check text markdown - doctor infor:", this.state);
+    
   };
   handleChangeSelect = async (selectedDoctor) => {
     this.setState({ selectedDoctor });
