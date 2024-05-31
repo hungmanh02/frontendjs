@@ -44,7 +44,6 @@ class ManageDoctor extends Component {
     this.props.handleEditUserFromparentKey(user);
   };
   handleDeleteUser = (user) => {
-    console.log("delete user", user);
     this.props.deleteUserRedux(user.id);
   };
 
@@ -114,19 +113,46 @@ class ManageDoctor extends Component {
       addressClinic: this.state.addressClinic,
       note: this.state.note,
     });
-    console.log("check text markdown - doctor infor:", this.state);
     
   };
   handleChangeSelect = async (selectedDoctor) => {
     this.setState({ selectedDoctor });
+    let {allPrice,allPayment,allProvince}=this.state;
     let res = await getDetailInforDoctor(selectedDoctor.value);
     if (res && res.errCode === 0 && res.data && res.data.Markdown) {
       let markdown = res.data.Markdown;
+      let addressClinic='', nameClinic='',note='',paymentId='',priceId='',provinceId='',selectedPrice='', selectedPayment='',selectedProvince='';
+      
+      if(res.data.Doctor_Infor){
+        addressClinic= res.data.Doctor_Infor.addressClinic;
+        nameClinic= res.data.Doctor_Infor.nameClinic;
+        note= res.data.Doctor_Infor.note;
+        priceId=+res.data.Doctor_Infor.priceId;
+        provinceId=+res.data.Doctor_Infor.provinceId;
+        paymentId=+res.data.Doctor_Infor.paymentId;
+
+        selectedPrice= allPrice.find(item => {
+           return item && item.value === priceId;
+        })
+        selectedProvince= allProvince.find(item => {
+           return item && item.value === provinceId;
+        })
+        selectedPayment= allPayment.find(item => {
+           return item && item.value === paymentId;
+        })
+
+      }
       this.setState({
         contentHtml: markdown.contentHtml,
         contentMarkdown: markdown.contentMarkdown,
         description: markdown.description,
         hasOldData: true,
+        addressClinic:addressClinic,
+        nameClinic:nameClinic,
+        note:note,
+        selectedPrice:selectedPrice,
+        selectedPayment:selectedPayment,
+        selectedProvince:selectedProvince,
       });
     } else {
       this.setState({
@@ -134,6 +160,9 @@ class ManageDoctor extends Component {
         contentMarkdown: "",
         description: "",
         hasOldData: false,
+        addressClinic:"",
+        nameClinic:"",
+        note:""
       });
     }
   };
@@ -152,7 +181,6 @@ class ManageDoctor extends Component {
     this.setState({
       ...stateCopy
     });
-    console.log(stateCopy);
   };
   buildDataInputSelect = (inputData, type) => {
     let result = [];
