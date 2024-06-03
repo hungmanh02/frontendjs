@@ -5,6 +5,7 @@ import moment from "moment";
 import localization from 'moment/locale/vi';
 import {getScheduleDoctorByDate} from '../../../services/userService'
 import { FormattedMessage } from "react-intl";
+import BookingModal from "./Modal/BookingModal";
 
 class DoctorSchedule extends Component {
   constructor(props) {
@@ -93,6 +94,7 @@ class DoctorSchedule extends Component {
     let {language}=this.props
    
     return (
+      <>
       <div className="doctor-schedule-container">
         <div className="all-schedule">
         <select onChange={(event)=>this.handleOnChangeSelect(event)}>
@@ -133,6 +135,8 @@ class DoctorSchedule extends Component {
           </div>
         </div>
       </div>
+      <BookingModal/>
+      </>
     );
   }
 }
