@@ -18,10 +18,13 @@
   }
   .content-down {
     .short-price {
-      span {
+      .detail-price {
         margin-left: 10px;
         cursor: pointer;
         color: rgb(38, 160, 200);
+      }
+      .currency {
+        margin: 0 5px;
       }
     }
     .title-price {
@@ -40,7 +43,7 @@
       .content-price {
       }
     }
-    .footer-price {
+    .payment-price {
       border: 1px solid #ddd;
       background-color: #eee;
       padding: 5px;

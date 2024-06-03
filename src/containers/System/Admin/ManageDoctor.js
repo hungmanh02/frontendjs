@@ -59,6 +59,7 @@ class ManageDoctor extends Component {
     this.props.getAllRequiredDoctorInfor();
   }
   componentDidUpdate(prevProps, prevState) {
+   
     if (prevProps.allDoctor !== this.props.allDoctor) {
       let dataSelect = this.buildDataInputSelect(this.props.allDoctor, 'USERS');
       this.setState({
