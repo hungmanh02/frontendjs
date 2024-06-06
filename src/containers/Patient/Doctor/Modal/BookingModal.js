@@ -24,10 +24,11 @@ class BookingModal extends Component {
   }
  
   render() {
+    let{isOpenModal,isCloseModal,dataTimeModal}=this.props;
     return (
         // toggle={toggle}
         <Modal
-        isOpen={true}
+        isOpen={isOpenModal}
         size="lg"
         centered
         // backdrop={true}
@@ -36,13 +37,54 @@ class BookingModal extends Component {
             <div className="booking-modal-content">
                 <div className="booking-modal-header">
                     <span className="left">Thông tin đặt lịch khám bệnh</span>
-                    <span className="right"><i className="fas fa-times"></i></span>
+                    <span className="right"
+                    onClick={isCloseModal}
+                    >
+                      <i className="fas fa-times"></i>
+                    </span>
                 </div>
                 <div className="booking-modal-body">
-            Hello world inside modal
+                  {/* {JSON.stringify(dataTimeModal)} */}
+                  <div className="doctor-infor"></div>
+                  <div className="price">
+                    Giá khám 500.000 VNĐ
+                  </div>
+                  <div className="row">
+                    <div className="col-6 form-group">
+                      <label>Họ tên</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-6 form-group">
+                      <label>Số điện thoại</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-6 form-group">
+                      <label>Địa chỉ Email</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-6 form-group">
+                      <label>Địa chỉ liên hệ</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-12 form-group">
+                      <label>Lý do khám</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-6 form-group">
+                      <label>Đặt cho ai</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                    <div className="col-6 form-group">
+                      <label>Giới tính</label>
+                      <input type="text" className="form-control"/>
+                    </div>
+                  </div>
+
 
                 </div>
                 <div className="booking-modal-footer">
+                  <button className="btn-booking-confirm">Xác nhận</button>
+                  <button className="btn-booking-cancel" onClick={isCloseModal}>Hủy</button>
 
                 </div>
             </div>

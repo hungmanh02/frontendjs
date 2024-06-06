@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import "./DoctorSchedule.scss";import { LANGUAGES } from "../../../utils/constant";
 import moment from "moment";
-import localization from 'moment/locale/vi';
+// import localization from 'moment/locale/vi';
 import {getScheduleDoctorByDate} from '../../../services/userService'
 import { FormattedMessage } from "react-intl";
 import BookingModal from "./Modal/BookingModal";
@@ -13,6 +13,8 @@ class DoctorSchedule extends Component {
     this.state = {
       allDays:[],
       allAvailableTime:[],
+      isOpenModalBooking: false,
+      dataScheduleTimeModal:{}
     };
   }
   async componentDidMount() {
@@ -89,8 +91,21 @@ class DoctorSchedule extends Component {
     }
     console.log('event onchange date value: ',event.target.value);
   }
+  handleClickScheduleTime=(time)=>{
+    console.log("check time modal:", time)
+    this.setState({
+      isOpenModalBooking:true,
+      dataScheduleTimeModal:time
+    });
+
+  }
+  closeBookingModal =()=>{
+    this.setState({
+      isOpenModalBooking:false
+    })
+  }
   render() {
-    let {allDays,allAvailableTime}=this.state;
+    let {allDays,allAvailableTime,isOpenModalBooking,dataScheduleTimeModal}=this.state;
     let {language}=this.props
    
     return (
@@ -120,7 +135,11 @@ class DoctorSchedule extends Component {
                 let timeDisplay=language === LANGUAGES.VI?item.timeTypeData.valueVi:item.timeTypeData.valueEn 
                 return (
 
-                  <button key={index} className={language===LANGUAGES.VI ? "btn-vie":"btn-en"}>{timeDisplay}</button>
+                  <button 
+                    key={index} 
+                    className={language===LANGUAGES.VI ? "btn-vie":"btn-en"}
+                    onClick={()=>this.handleClickScheduleTime(item)}
+                  >{timeDisplay}</button>
                 )
                })}
                </div>
@@ -135,7 +154,11 @@ class DoctorSchedule extends Component {
           </div>
         </div>
       </div>
-      <BookingModal/>
+      <BookingModal
+        isOpenModal={isOpenModalBooking}
+        isCloseModal={this.closeBookingModal}
+        dataTimeModal={dataScheduleTimeModal}
+      />
       </>
     );
   }
