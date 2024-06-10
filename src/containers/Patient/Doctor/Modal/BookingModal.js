@@ -4,6 +4,8 @@ import "./BookingModal.scss";
 // import { LANGUAGES } from "../../../utils/constant";
 import {Modal} from "reactstrap";
 import { FormattedMessage } from "react-intl";
+import ProfileDoctor from "../ProfileDoctor";
+import _ from "lodash";
 
 class BookingModal extends Component {
   constructor(props) {
@@ -25,6 +27,10 @@ class BookingModal extends Component {
  
   render() {
     let{isOpenModal,isCloseModal,dataTimeModal}=this.props;
+    let doctorId='';
+    if(dataTimeModal && !_.isEmpty(dataTimeModal)){
+      doctorId=dataTimeModal.doctorId;
+    }
     return (
         // toggle={toggle}
         <Modal
@@ -45,7 +51,12 @@ class BookingModal extends Component {
                 </div>
                 <div className="booking-modal-body">
                   {/* {JSON.stringify(dataTimeModal)} */}
-                  <div className="doctor-infor"></div>
+                  <div className="doctor-infor">
+                    <ProfileDoctor
+                    doctorId={doctorId}
+                    
+                    />
+                  </div>
                   <div className="price">
                     Giá khám 500.000 VNĐ
                   </div>
