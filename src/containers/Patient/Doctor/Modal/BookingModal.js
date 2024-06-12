@@ -57,9 +57,6 @@ class BookingModal extends Component {
                     
                     />
                   </div>
-                  <div className="price">
-                    Giá khám 500.000 VNĐ
-                  </div>
                   <div className="row">
                     <div className="col-6 form-group">
                       <label>Họ tên</label>

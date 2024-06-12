@@ -4,6 +4,8 @@ import "./ProfileDoctor.scss";
 import {getProfileInforDoctorById} from '../../../services/userService';
 import { LANGUAGES } from "../../../utils/constant";
 import { FormattedMessage } from "react-intl";
+import { NumericFormat } from "react-number-format";
+
 
 class ProfileDoctor extends Component {
   constructor(props) {
@@ -13,7 +15,8 @@ class ProfileDoctor extends Component {
     };
   }
   async componentDidMount() {
-    let {language}=this.props;
+    
+    let { language } = this.props;
     let  data = await this.getProfileDoctor(this.props.doctorId);
     this.setState({
         dataProfile:data
@@ -43,6 +46,7 @@ class ProfileDoctor extends Component {
  
   render() {
     let {dataProfile}=this.state;
+    console.log(dataProfile);
     let {language}=this.props;
     let nameVi='',nameEn='';
     if(dataProfile && dataProfile.positionData){
@@ -65,11 +69,34 @@ class ProfileDoctor extends Component {
                         {language === LANGUAGES.VI ? nameVi : nameEn}
                     </div>
                     <div className="content-right__down">
-                        {dataProfile.Markdown && dataProfile.Markdown.description && (
-                        <span>{dataProfile.Markdown.description}</span>
-                        )} 
+                       
                     </div>
                     </div>
+            </div>
+            <div className="price">
+            Giá Khám :
+                        { dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor.priceIdData &&  language === LANGUAGES.VI 
+                          && dataProfile.Doctor_Infor.priceIdData.valueVi
+                          ? <NumericFormat
+                              className="currency" 
+                              value={dataProfile.Doctor_Infor.priceIdData.valueVi} 
+                              displayType={'text'} 
+                              thousandSeparator={true} 
+                              suffix={'VNĐ'}
+                          />
+                          :""  
+                        } 
+                        { dataProfile && dataProfile.Doctor_Infor && dataProfile.Doctor_Infor.priceIdData &&  language === LANGUAGES.EN 
+                          && dataProfile.Doctor_Infor.priceIdData.valueEn
+                          ? <NumericFormat
+                              className="currency" 
+                              value={dataProfile.Doctor_Infor.priceIdData.valueEn} 
+                              displayType={'text'} 
+                              thousandSeparator={true} 
+                              suffix={'$'}
+                          />
+                          :""  
+                        } 
             </div>
         </div>
     );
