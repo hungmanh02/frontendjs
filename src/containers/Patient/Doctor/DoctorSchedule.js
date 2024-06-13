@@ -86,13 +86,9 @@ class DoctorSchedule extends Component {
         allAvailableTime: res.data ? res.data:[]
         })
       }
-    console.log('check res schedule doctor by date:',res);
-
     }
-    console.log('event onchange date value: ',event.target.value);
   }
   handleClickScheduleTime=(time)=>{
-    console.log("check time modal:", time)
     this.setState({
       isOpenModalBooking:true,
       dataScheduleTimeModal:time

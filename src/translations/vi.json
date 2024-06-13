@@ -100,6 +100,9 @@
       "payment-price":"Người bệnh có thể thanh toán chi phí bằng hình thức: ",
       "hide-price":"Ẩn chi tiết",
       "detail-price":"Xem chi tiết"
+    },
+    "profile-doctor":{
+      "booking-free":"Miễn phí đặt lịch"
     }
   },
   "admin":{
